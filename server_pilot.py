@@ -43,8 +43,12 @@ print ('Backend Server: {}:8888'.format(myIP))
 2: 停
 3: 啟動"""
 # ------------------------
+clients_TCP = []
 class Connection(object):
     def __init__(self, stream, address):
+        clients_TCP.append(self)
+        #clients_T = clients_TCP
+        print(clients_TCP)
         self._stream = stream    
         self._address = address
 
@@ -96,14 +100,7 @@ class Connection(object):
                 if data is 'y':
                     print('trigger b is now 0')
                     trigger_b = 0                        #抵達終點之後, trigger_b設為0
-            #print('echo:'+str(echo))
-
-        if trigger is 1:
-            echo = 3
-            trigger = 0
-                    
-        #except:
-            #print('error')
+                            
         self.read_message()
 
     def on_close(self):
@@ -161,22 +158,17 @@ class ResponseH(tornado.web.RequestHandler):
         print ('new connection')            
         
 #----- websocket handler
-hd = None
-class WSHandler(tornado.websocket.WebSocketHandler):
-    global alert
-    if alert is 1:
-        self.write_message('e')
-        console.write('e')
-        alert = 0
-    
+clients = []
+
+class WSHandler(tornado.websocket.WebSocketHandler):    
     def open(self):
-        global hd
-        hd = self
+        global clients
         print ('new connection')
+        clients.append(self)
+        print(clients)
         #self.on_message()
         #self.on_message()
     def on_message(self, message):
-        
         self.write_message(u"You said: " + message)
  
     def on_close(self):
@@ -185,12 +177,39 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     def check_origin(self, origin):
         return True
 
+## check the queue for pending messages, and rely that to all connected clients
+def checkQueue():
+    global alert, clients, trigger, clients_TCP
+    if alert is 1:
+        print('alert:')
+        print(clients)
+        for c in clients:
+            c.write_message('e')
+            #print(clients)
+            alert = 0
+            print("sending alert")
+
+    if trigger is 1:
+        print('trigger:')
+        print(clients_TCP)
+        for ct in clients_TCP:
+            echo='3'
+            ct._stream.write(echo.encode('utf-8'))
+            trigger = 0
+
 #------Http handler
     
 app = tornado.web.Application([(r"/", MainHandler), (r'/echo', WSHandler),])
 
 if __name__ == "__main__":
+# ---- TCP ------------------
     server = TCP_Handler()
     server.listen(8000)
     app.listen(8888)
-    IOLoop.instance().start()
+
+# ---- websocket------------
+    mainLoop = IOLoop.instance()
+    scheduler_interval = 1000
+    scheduler = tornado.ioloop.PeriodicCallback(checkQueue, scheduler_interval, io_loop = mainLoop)
+    scheduler.start()
+    mainLoop.start()
