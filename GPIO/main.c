@@ -1,6 +1,9 @@
 #include "gpio_mod_ver2.h"
 #include "time.h"
 
+#define DETECT_SIGNAL 1
+#define OFF_SIGNAL 0
+
 int decide_time(GPIO *A);
 int det_base(GPIO *A);
 int det_D(GPIO *A, float base_t, int *r);
@@ -14,11 +17,11 @@ int decide_time(GPIO *A)
     while(1){
         signal = gpio_state(A);
         printf("after stage 2");
-        if(signal == 0){
+        if(signal == DETECT_SIGNAL){
             clock_t begin = clock();
             while(1){
                 signal = gpio_state(A);
-                if(signal == 0){}
+                if(signal == DETECT_SIGNAL){}
                 else
                     break;
             }
@@ -38,7 +41,7 @@ int det_base(GPIO *A)
     while(1){
         signal = gpio_state(A);
         //printf("%d\n",A->data);
-        if(signal == 0)
+        if(signal == DETECT_SIGNAL)
             count++;
             //printf("count: %d", count);
             if(count>=5){
@@ -48,7 +51,7 @@ int det_base(GPIO *A)
                 printf("base_time is %f\n", base_time);
                 return base_time;
             }
-        else if(signal == 1){
+        else if(signal == OFF_SIGNAL){
             count = 0;
             return 0;
         }
@@ -65,7 +68,7 @@ int det_D(GPIO *A, float base_t, int *r)
     while(1){
         signal = gpio_state(A);
         printf("A->data: %d\n", A->data);
-        if(signal == 0){
+        if(signal == DETECT_SIGNAL){
             count++;
             printf("det_D count =%d\n", count);
         
@@ -86,20 +89,20 @@ int det_D(GPIO *A, float base_t, int *r)
         printf("%d time gpio\n", i);
         signal = gpio_state(A);
 
-        if(signal == 1){
+        if(signal == OFF_SIGNAL){
             while(1){
                 signal = gpio_state(A);
                 printf("gpio signal = %d\n", signal);
-                if(signal == 0)
+                if(signal == DETECT_SIGNAL)
                     break;
             }
         }
 
-        if(signal == 0){
+        if(signal == DETECT_SIGNAL){
             clock_t begin = clock();
             while(1){
                 signal = gpio_state(A);
-                if(signal == 0){}
+                if(signal == DETECT_SIGNAL){}
                     else
                         break;
                 }
@@ -111,8 +114,9 @@ int det_D(GPIO *A, float base_t, int *r)
             }
         
     }
-    printf("r[0]=%f, time[0] = %f, ratio[0] =%f, r[1]=%f, time[1] = %f,  ratio[1] = %f, \
-            r[2] = %f, time[2] = %f, ratio[2] = %f\n",r[0], time[0], ratio[0], r[1],  \
+    printf("base_time=%.2f \n", base_t);
+    printf("r[0]=%d, time[0] = %.2f, ratio[0] =%.2f, r[1]=%d, time[1] = %.2f,  ratio[1] = %.2f, \
+            r[2] = %d, time[2] = %.2f, ratio[2] = %.2f \n",r[0], time[0], ratio[0], r[1],  \
             time[1], ratio[1], r[2], time[2], ratio[2]);
     return 1;
 }
