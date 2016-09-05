@@ -3,16 +3,20 @@
 <title>IOT System</title>
 <link rel="stylesheet" href="w3.css">
 <script src="jquery-3.1.0.min.js"></script>
-<body class="w3-container">
 <script src="sweetalert.min.js"></script> 
 <link rel="stylesheet" type="text/css" href="sweetalert.css">
 <meta charset="UTF-8">
+<body class="w3-container">
+
 <!-- connect to station -->
 <script>
   ws = new WebSocket("ws://192.168.5.156:8888/echo");
+  function mypack(){
+    station = [1,2,3]
+  }
 //var ws = new WebSocket("ws://127.0.0.1:8888/");
 ws.onopen = function() {
-   ws.send("Hello, world");
+   ws.send("Connect Sucess");
 };
 
 ws.onerror = function (error) {
@@ -26,6 +30,7 @@ ws.onmessage = function (evt) {
   if (evt.type == "Text"){
     handleTextMessage(evt.data);
   }
+   //swal(evt.data);
 };
 //---To stationA
 function staA(){
@@ -60,23 +65,21 @@ function staB(){
  }
 
 function btn_getstationA(){
-        alert("success");
-        var str = 'http://127.0.0.1:8888?callback=?&data=A';
-        $.getJSON( str, function (json) { } );
-      }
-        
+        var str = 'http://192.168.5.132:8888?callback=?&data=A';
+        $.getJSON(str, function(json){ mypack(0) } );
+        swal("Connect Sucess");
+    }
 function btn_getstationB(){
-        alert("success");
         var str = 'http://127.0.0.1:8888?callback=?&data=B';
-        $.getJSON( str, function (json) { } );
-      }
-        
+        $.getJSON(str, function(json){ mypack(1) } );
+        swal("Connect Sucess");
+    }
 function btn_getstationC(){
-        alert("success");
         var str = 'http://127.0.0.1:8888?callback=?&data=C';
-        $.getJSON( str, function (json) { } );
-      }
-        
+         $.getJSON(str, function(json){ mypack(2) } );
+        swal("Connect Sucess");
+    }
+>>>>>>> f2907cf46459b045b6f28038c17dfe4dfee137fb
 
 function handleTextMessage(text){
   var message = JSON.parse(text);
@@ -148,6 +151,7 @@ Your browser does not support the HTML5 canvas tag.</canvas>
   var ctx2 = c.getContext("2d");
   //---stationA
   var ctx3 = c.getContext("2d");
+  //---map
   ctx.lineWidth = 10;
   ctx.strokeRect(50, 50, 600, 400);
   //---stationB
