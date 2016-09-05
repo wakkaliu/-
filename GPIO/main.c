@@ -1,10 +1,14 @@
 #include "gpio_mod_ver2.h"
 #include "time.h"
 
+#define DETECT_SIGNAL 1
+#define OFF_SIGNAL 0
+
 int decide_time(GPIO *A);
 int det_base(GPIO *A);
 int det_D(GPIO *A, float base_t, int *r);
 int dec_num(float sp_time, float base);
+void exception_check(GPIO *A, float base_t);
 
 int decide_time(GPIO *A)
 {
@@ -14,11 +18,11 @@ int decide_time(GPIO *A)
     while(1){
         signal = gpio_state(A);
         printf("after stage 2");
-        if(signal == 0){
+        if(signal == DETECT_SIGNAL){
             clock_t begin = clock();
             while(1){
                 signal = gpio_state(A);
-                if(signal == 0){}
+                if(signal == DETECT_SIGNAL){}
                 else
                     break;
             }
@@ -37,8 +41,8 @@ int det_base(GPIO *A)
 
     while(1){
         signal = gpio_state(A);
-        //printf("%d\n",A->data);
-        if(signal == 0)
+        printf("%d\n",A->data);
+        if(signal == DETECT_SIGNAL)
             count++;
             //printf("count: %d", count);
             if(count>=5){
@@ -48,7 +52,7 @@ int det_base(GPIO *A)
                 printf("base_time is %f\n", base_time);
                 return base_time;
             }
-        else if(signal == 1){
+        else if(signal == OFF_SIGNAL){
             count = 0;
             return 0;
         }
@@ -65,7 +69,7 @@ int det_D(GPIO *A, float base_t, int *r)
     while(1){
         signal = gpio_state(A);
         printf("A->data: %d\n", A->data);
-        if(signal == 0){
+        if(signal == DETECT_SIGNAL){
             count++;
             printf("det_D count =%d\n", count);
         
@@ -86,36 +90,70 @@ int det_D(GPIO *A, float base_t, int *r)
         printf("%d time gpio\n", i);
         signal = gpio_state(A);
 
-        if(signal == 1){
+        if(signal == OFF_SIGNAL){
             while(1){
                 signal = gpio_state(A);
                 printf("gpio signal = %d\n", signal);
-                if(signal == 0)
+                if(signal == DETECT_SIGNAL)
                     break;
             }
         }
 
-        if(signal == 0){
+        if(signal == DETECT_SIGNAL){
             clock_t begin = clock();
             while(1){
                 signal = gpio_state(A);
-                if(signal == 0){}
+                if(signal == DETECT_SIGNAL){
+                	printf("after 3 time detect");
+                	exception_check(A, base_t);
+				}
                     else
                         break;
                 }
                 clock_t end = clock();
                 spend_time = end - begin;
+                printf("spend_time[%d]=%.2f", i, spend_time);
                 time[i] = spend_time;
                 ratio[i] = spend_time/base_t;
                 r[i] = dec_num(spend_time, base_t);
             }
         
     }
-    printf("r[0]=%d, time[0] = %d, ratio[0], r[1]=%d, time[1] = %d,  ratio[1], \
-            r[2]=%d, time[2] = %d, ratio[2] = %d\n",r[0], time[0], ratio[0], r[1],  \
+    printf("base_time=%.2f \n", base_t);
+    printf("r[0]=%d, time[0] = %.2f, ratio[0] =%.2f, r[1]=%d, time[1] = %.2f,  ratio[1] = %.2f, \
+            r[2] = %d, time[2] = %.2f, ratio[2] = %.2f \n",r[0], time[0], ratio[0], r[1],  \
             time[1], ratio[1], r[2], time[2], ratio[2]);
     return 1;
 }
+
+void exception_check(GPIO *A, float base_t){
+	int signal;
+	float sp_time = 0.0 ;
+	signal = gpio_state(A);
+	
+	while(1){
+		clock_t begin = clock();
+		while(1){
+			signal = gpio_state(A);
+			if(signal == DETECT_SIGNAL){
+				printf("exception: A->data: %d\n", A->data);
+			}
+			else if(signal == OFF_SIGNAL){
+				break;
+			}
+		}
+		clock_t end = clock();
+		sp_time = end - begin;
+		if(sp_time < (base_t/2)){
+			printf("exception_check: %.2f",sp_time);
+		}
+		else{
+			printf("\n exception_check break point: %.2f",sp_time);
+			break;
+		}
+	}
+}
+
 //decide the signal is 1 or 0 base on the base time we measure at beginnig
 int dec_num(float sp_time, float base)
 {
@@ -129,8 +167,10 @@ int dec_num(float sp_time, float base)
     else if((ratio > 1.6) && (ratio < 2.4)){
         return 1;
     }
-    else
-        printf("dec_num error!!");
+    else{
+    	printf("dec_num error!!");
+    	return 9;
+	}     
 }
 
 int main(int argc, char const *argv[])
