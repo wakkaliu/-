@@ -3,95 +3,11 @@
 <title>IOT System</title>
 <link rel="stylesheet" href="w3.css">
 <script src="jquery-3.1.0.min.js"></script>
-<body class="w3-container">
 <script src="sweetalert.min.js"></script> 
 <link rel="stylesheet" type="text/css" href="sweetalert.css">
 <meta charset="UTF-8">
-<!-- connect to station -->
-<script>
-  ws = new WebSocket("ws://192.168.5.144:8888/echo");
-//var ws = new WebSocket("ws://127.0.0.1:8888/");
-ws.onopen = function() {
-   ws.send("Hello, world");
-};
+<body class="w3-container">
 
-ws.onerror = function (error) {
-  console.error('WebSocket Error ' + error);
-  /*alert("error");*/
-  swal("Connect Error!");
-};
-
-ws.onmessage = function (evt) {
-  if (evt.type == "Text"){
-    handleTextMessage(evt.data);
-  }
-};
-//---To stationA
-function staA(){
-       var c = document.getElementById("myCanvas");
-       var ctx3 = c.getContext("2d");
-        ctx3.beginPath();
-        ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
-        ctx3.fillStyle = "red";
-        ctx3.fill();
-}
-//---To stationB
-function staB(){
-       var c = document.getElementById("myCanvas");
-       var ctx = c.getContext("2d");
-        ctx1.beginPath();
-        ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
-        ctx1.fillStyle = "red";
-        ctx1.fill();
-}
-//---To stationC
- function staC(){
-       var c = document.getElementById("myCanvas");
-       var ctx2 = c.getContext("2d");
-        ctx2.beginPath();
-        ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-        ctx2.fillStyle = "red";
-        ctx2.fill();
- }
-//---If car stop
- function error(){
-   swal("Danger!", "Car near miss");
- }
-
-function btn_getstationA(){
-        var str = 'http://127.0.0.1:8888?callback=?&data=A';}
-function btn_getstationB(){
-        var str = 'http://127.0.0.1:8888?callback=?&data=B';}
-function btn_getstationC(){
-        var str = 'http://127.0.0.1:8888?callback=?&data=C';}
-
-function handleTextMessage(text){
-  var message = JSON.parse(text);
-
-  if(text == "A,a"){
-    staA();
-  }
- 
-  else if(text == "B,b"){
-    staB();
-  }
-  
-  else if(text == "C,c"){
-   staC();
-  }
-  
-  else if(text == "e"){
-    error();
-  }
-
-}
-
-//ws.send('message');
-
-
-
-
-</script>
 
 <style>
 body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
@@ -135,6 +51,7 @@ Your browser does not support the HTML5 canvas tag.</canvas>
   var ctx2 = c.getContext("2d");
   //---stationA
   var ctx3 = c.getContext("2d");
+  //---map
   ctx.lineWidth = 10;
   ctx.strokeRect(50, 50, 600, 400);
   //---stationB
@@ -158,6 +75,365 @@ Your browser does not support the HTML5 canvas tag.</canvas>
   ctx.fillText("A", 600,310);
   ctx3.fillStyle = "black";
   ctx3.fill();
+  
+  ws = new WebSocket("ws://127.0.0.1:8888/echo");
+  //var ws = new WebSocket("ws://127.0.0.1:8888/");
+  ws.onopen = function() {
+   ws.send("Connect Sucess");
+  };
+
+  ws.onerror = function (error) {
+  console.error('WebSocket Error ' + error);
+  //alert("error");
+  swal("Connect Error!");
+  };
+
+  ws.onmessage = function (evt) {
+    //swal(evt.data);
+    console.log(evt.data);
+    if (evt.data == "e"){
+      error();
+    }
+    else if (evt.data == "A"){
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      //---stationB
+      var ctx1 = c.getContext("2d");
+      //---stationC
+      var ctx2 = c.getContext("2d");
+      //---stationA
+      var ctx3 = c.getContext("2d");
+      //---map
+      ctx.lineWidth = 10;
+      ctx.strokeRect(50, 50, 600, 400);
+      //---stationB
+      ctx1.beginPath();
+      ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("B", 370,100);
+      ctx1.fillStyle = "black";
+      ctx1.fill();
+      //---stationC
+      ctx2.beginPath();
+      ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("C", 70,310);
+      ctx2.fillStyle = "black";
+      ctx2.fill();
+      //---stationA
+      ctx3.beginPath();
+      ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("A", 600,310);
+      ctx.font = "10px Arial";
+      ctx.fillText("CAR", 670,310);
+      ctx3.fillStyle = "red";
+      ctx3.fill(); 
+    }
+    else if (evt.data == "B"){
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      //---stationB
+      var ctx1 = c.getContext("2d");
+      //---stationC
+      var ctx2 = c.getContext("2d");
+      //---stationA
+      var ctx3 = c.getContext("2d");
+      //---map
+      ctx.lineWidth = 10;
+      ctx.strokeRect(50, 50, 600, 400);
+      //---stationB
+      ctx1.beginPath();
+      ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("B", 370,100);
+      ctx.font = "10px Arial";
+      ctx.fillText("CAR", 370,30);
+      ctx1.fillStyle = "red";
+      ctx1.fill();
+      //---stationC
+      ctx2.beginPath();
+      ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("C", 70,310);
+      ctx2.fillStyle = "black";
+      ctx2.fill();
+      //---stationA
+      ctx3.beginPath();
+      ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("A", 600,310);
+      ctx3.fillStyle = "black";
+      ctx3.fill(); 
+    }
+    else if (evt.data == "C"){
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      //---stationB
+      var ctx1 = c.getContext("2d");
+      //---stationC
+      var ctx2 = c.getContext("2d");
+      //---stationA
+      var ctx3 = c.getContext("2d");
+      //---map
+      ctx.lineWidth = 10;
+      ctx.strokeRect(50, 50, 600, 400);
+      //---stationB
+      ctx1.beginPath();
+      ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("B", 370,100);
+      ctx1.fillStyle = "black";
+      ctx1.fill();
+      //---stationC
+      ctx2.beginPath();
+      ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("C", 70,310);
+      ctx.font = "10px Arial";
+      ctx.fillText("CAR", 5,305);
+      ctx2.fillStyle = "red";
+      ctx2.fill();
+      //---stationA
+      ctx3.beginPath();
+      ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("A", 600,310);
+      ctx3.fillStyle = "black";
+      ctx3.fill(); 
+    }
+    else if (evt.data == "a"){
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      //---stationB
+      var ctx1 = c.getContext("2d");
+      //---stationC
+      var ctx2 = c.getContext("2d");
+      //---stationA
+      var ctx3 = c.getContext("2d");
+      //---map
+      ctx.lineWidth = 10;
+      ctx.strokeRect(50, 50, 600, 400);
+      //---stationB
+      ctx1.beginPath();
+      ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("B", 370,100);
+      ctx1.fillStyle = "black";
+      ctx1.fill();
+      //---stationC
+      ctx2.beginPath();
+      ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("C", 70,310);
+      ctx2.fillStyle = "black";
+      ctx2.fill();
+      //---stationA
+      ctx3.beginPath();
+      ctx3.arc(650, 150, 15, 0, 2 * Math.PI);
+      ctx.font = "px Arial";
+      ctx.fillText("CAR", 670,155);
+      ctx3.fillStyle = "red";
+      ctx3.fill(); 
+    }
+    else if (evt.data == "b"){
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      //---stationB
+      var ctx1 = c.getContext("2d");
+      //---stationC
+      var ctx2 = c.getContext("2d");
+      //---stationA
+      var ctx3 = c.getContext("2d");
+      //---map
+      ctx.lineWidth = 10;
+      ctx.strokeRect(50, 50, 600, 400);
+      //---stationB
+      ctx1.beginPath();
+      ctx1.arc(100, 50, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("CAR", 95,20);
+      ctx1.fillStyle = "red";
+      ctx1.fill();
+      //---stationC
+      ctx2.beginPath();
+      ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("C", 70,310);
+      ctx2.fillStyle = "black";
+      ctx2.fill();
+      //---stationA
+      ctx3.beginPath();
+      ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("A", 600,310);
+      ctx3.fillStyle = "black";
+      ctx3.fill(); 
+    }
+    else if (evt.data == "c"){
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      //---stationB
+      var ctx1 = c.getContext("2d");
+      //---stationC
+      var ctx2 = c.getContext("2d");
+      //---stationA
+      var ctx3 = c.getContext("2d");
+      //---map
+      ctx.lineWidth = 10;
+      ctx.strokeRect(50, 50, 600, 400);
+      //---stationB
+      ctx1.beginPath();
+      ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("B", 370,100);
+      ctx1.fillStyle = "black";
+      ctx1.fill();
+      //---stationC
+      ctx2.beginPath();
+      ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
+      ctx.font = "30px Arial";
+      ctx.fillText("C", 70,310);
+      ctx2.fillStyle = "red";
+      ctx2.fill();
+      //---stationA
+      ctx3.beginPath();
+      ctx3.arc(400, 450, 15, 0, 2 * Math.PI);
+      ctx.font = "10px Arial";
+      ctx.fillText("CAR", 390,425);
+      ctx3.fillStyle = "black";
+      ctx3.fill(); 
+    }
+  };
+
+  //---To stationA
+  /*function staA(){
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    //---stationB
+    var ctx1 = c.getContext("2d");
+    //---stationC
+    var ctx2 = c.getContext("2d");
+    //---stationA
+    var ctx3 = c.getContext("2d");
+    //---map
+    ctx.lineWidth = 10;
+    ctx.strokeRect(50, 50, 600, 400);
+    //---stationB
+    ctx1.beginPath();
+    ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
+    ctx.font = "30px Arial";
+    ctx.fillText("B", 370,100);
+    ctx1.fillStyle = "black";
+    ctx1.fill();
+    //---stationC
+    ctx2.beginPath();
+    ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
+    ctx.font = "30px Arial";
+    ctx.fillText("C", 70,310);
+    ctx2.fillStyle = "black";
+    ctx2.fill();
+    //---stationA
+    ctx3.beginPath();
+    ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
+    ctx.font = "30px Arial";
+    ctx.fillText("A", 600,310);
+    ctx3.fillStyle = "red";
+    ctx3.fill(); 
+  }
+//---To stationB
+  function staB(){
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    //---stationB
+    var ctx1 = c.getContext("2d");
+    //---stationC
+    var ctx2 = c.getContext("2d");
+    //---stationA
+    var ctx3 = c.getContext("2d");
+    //---map
+    ctx.lineWidth = 10;
+    ctx.strokeRect(50, 50, 600, 400);
+    //---stationB
+    ctx1.beginPath();
+    ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
+    ctx.font = "30px Arial";
+    ctx.fillText("B", 370,100);
+    ctx1.fillStyle = "red";
+    ctx1.fill();
+    //---stationC
+    ctx2.beginPath();
+    ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
+    ctx.font = "30px Arial";
+    ctx.fillText("C", 70,310);
+    ctx2.fillStyle = "black";
+    ctx2.fill();
+    //---stationA
+    ctx3.beginPath();
+    ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
+    ctx.font = "30px Arial";
+    ctx.fillText("A", 600,310);
+    ctx3.fillStyle = "black";
+    ctx3.fill();
+  }
+  //---To stationC
+  function staC(){
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    //---stationB
+    var ctx1 = c.getContext("2d");
+    //---stationC
+    var ctx2 = c.getContext("2d");
+    //---stationA
+    var ctx3 = c.getContext("2d");
+    //---map
+    ctx.lineWidth = 10;
+    ctx.strokeRect(50, 50, 600, 400);
+    //---stationB
+    ctx1.beginPath();
+    ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
+    ctx.font = "30px Arial";
+    ctx.fillText("B", 370,100);
+    ctx1.fillStyle = "black";
+    ctx1.fill();
+    //---stationC
+    ctx2.beginPath();
+    ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
+    ctx.font = "30px Arial";
+    ctx.fillText("C", 70,310);
+    ctx2.fillStyle = "red";
+    ctx2.fill();
+    //---stationA
+    ctx3.beginPath();
+    ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
+    ctx.font = "30px Arial";
+    ctx.fillText("A", 600,310);
+    ctx3.fillStyle = "black";
+    ctx3.fill();
+  }*/
+  //---If car stop
+  function error(){
+    swal("Danger!", "Car near miss");
+  }
+
+  function btn_getstationA(){
+        //var str = 'http://192.168.5.132:8888?callback=?&data=A';
+        var str = 'http://127.0.0.1:8888?callback=?&data=A';
+        $.getJSON(str);
+        swal("Connect Sucess");
+        
+    }
+  function btn_getstationB(){
+        //var str = 'http://192.168.5.132:8888?callback=?&data=B';
+        var str = 'http://127.0.0.1:8888?callback=?&data=B';
+        $.getJSON(str);
+        swal("Connect Sucess");
+    }
+  function btn_getstationC(){
+      var str = 'http://127.0.0.1:8888?callback=?&data=C';
+        $.getJSON(str);
+        swal("Connect Sucess");
+    }
 
 </script>
 

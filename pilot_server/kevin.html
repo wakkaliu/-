@@ -17,24 +17,21 @@ ws.onopen = function() {
 ws.onmessage = function (evt) {
   alert(evt.data);
 };
-//----- mypack
-function mypack(json){
-    $("diva").text(json.buf);
-}
+
 //----- btn_get
 function btn_getstationA(){
         var str = 'http://127.0.0.1:8888?callback=?&data=A';
-        $.getJSON( str, function (json) { mypack(json) } );
+        $.getJSON( str, function (json) {  } );
         alert("success");
 }
 function btn_getstationB(){
         var str = 'http://127.0.0.1:8888?callback=?&data=B';
-        $.getJSON( str, function (json) { mypack(json) } );
+        $.getJSON( str, function (json) {  } );
         alert("success");
 }
 function btn_getstationC(){
         var str = 'http://127.0.0.1:8888?callback=?&data=C';
-        $.getJSON( str, function (json) { mypack(json) } );
+        $.getJSON( str, function (json) {  } );
         alert("success");
 }
 
