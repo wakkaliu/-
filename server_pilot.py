@@ -32,6 +32,16 @@ def pos_map_number(argument):
     }
     return switcher.get(argument, "nothing")
 
+def num_map_position(argument):
+    switcher = {
+        1 : 'A',
+        2 : 'a',
+        3 : 'B',
+        4 : 'b',
+        5 : 'C',
+        6 : 'c',
+    }
+    return switcher.get(argument, "nothing")
 
 # --- My IP address
 myIP = socket.gethostbyname(socket.gethostname())
@@ -178,6 +188,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         return True
 
 ## check the queue for pending messages, and rely that to all connected clients
+i = 0
 def checkQueue():
     global alert, clients, trigger, clients_TCP
     if alert is 1:
@@ -196,7 +207,16 @@ def checkQueue():
             echo='3'
             ct._stream.write(echo.encode('utf-8'))
             trigger = 0
-
+       
+    for c in clients:
+        global i
+        i = i+1
+        print('i'+str(i))
+        if i is 5:
+            i = 0
+            print('re_ps='+num_map_position(ps.recent))
+            c.write_message(num_map_position(ps.recent))
+    
 #------Http handler
     
 app = tornado.web.Application([(r"/", MainHandler), (r'/echo', WSHandler),])

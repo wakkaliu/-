@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <!-- connect to station -->
 <script>
-  ws = new WebSocket("ws://192.168.5.144:8888/echo");
+  ws = new WebSocket("ws://192.168.5.156:8888/echo");
 //var ws = new WebSocket("ws://127.0.0.1:8888/");
 ws.onopen = function() {
    ws.send("Hello, world");
@@ -22,6 +22,7 @@ ws.onerror = function (error) {
 };
 
 ws.onmessage = function (evt) {
+  console.error('WebSocket recieved ' + evt.data);
   if (evt.type == "Text"){
     handleTextMessage(evt.data);
   }
@@ -59,11 +60,23 @@ function staB(){
  }
 
 function btn_getstationA(){
-        var str = 'http://127.0.0.1:8888?callback=?&data=A';}
+        alert("success");
+        var str = 'http://127.0.0.1:8888?callback=?&data=A';
+        $.getJSON( str, function (json) { } );
+      }
+        
 function btn_getstationB(){
-        var str = 'http://127.0.0.1:8888?callback=?&data=B';}
+        alert("success");
+        var str = 'http://127.0.0.1:8888?callback=?&data=B';
+        $.getJSON( str, function (json) { } );
+      }
+        
 function btn_getstationC(){
-        var str = 'http://127.0.0.1:8888?callback=?&data=C';}
+        alert("success");
+        var str = 'http://127.0.0.1:8888?callback=?&data=C';
+        $.getJSON( str, function (json) { } );
+      }
+        
 
 function handleTextMessage(text){
   var message = JSON.parse(text);
@@ -162,9 +175,9 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 </script>
 
   <b>
-    <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationA()"><b>StationA</b></button></p>
-    <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationB()"><b>StationB</b></button></p>
-    <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationC()"><b>StationC</b></button></p>
+    <p><button class="w3-btn w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationA()"><b>StationA</b></button></p>
+    <p><button class="w3-btn w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationB()"><b>StationB</b></button></p>
+    <p><button class="w3-btn w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationC()"><b>StationC</b></button></p>
   </b>
          </div>
       </div>

@@ -111,8 +111,8 @@ int det_D(GPIO *A, float base_t, int *r)
             }
         
     }
-    printf("r[0]=%d, time[0] = %d, ratio[0], r[1]=%d, time[1] = %d,  ratio[1], \
-            r[2]=%d, time[2] = %d, ratio[2] = %d\n",r[0], time[0], ratio[0], r[1],  \
+    printf("r[0]=%f, time[0] = %f, ratio[0] =%f, r[1]=%f, time[1] = %f,  ratio[1] = %f, \
+            r[2] = %f, time[2] = %f, ratio[2] = %f\n",r[0], time[0], ratio[0], r[1],  \
             time[1], ratio[1], r[2], time[2], ratio[2]);
     return 1;
 }
