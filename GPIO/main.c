@@ -64,7 +64,7 @@ int det_D(GPIO *A, float base_t, int *r)
 {
     float time[3], ratio[3];
     int i, signal, count = 0;
-    float spend_time;
+    float spend_time, blank_t;
 
     while(1){
         signal = gpio_state(A);
@@ -90,9 +90,16 @@ int det_D(GPIO *A, float base_t, int *r)
         printf("%d time gpio\n", i);
         signal = gpio_state(A);
 
+        clock_t start_checkblank = clock();
         if(signal == OFF_SIGNAL){
             while(1){
                 signal = gpio_state(A);
+                clock_t end_checkblank = clock();
+                blank_t = end_checkblank - start_checkblank;
+                if(blank_t > 5*base_t){
+                    printf("checkblank return!!!");
+                    return 0;
+                }
                 printf("gpio signal = %d\n", signal);
                 if(signal == DETECT_SIGNAL)
                     break;
