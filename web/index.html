@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <body class="w3-container">
 
-
 <style>
 body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
@@ -20,14 +19,7 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <p><div class="w3-container w3-center w3-padding-32">
     <h1><b>工廠物流車系統</b></h1>
 </div></p>
-<!-- if range<=20 -->
-<!--
-<div  class="w3-container w3-section w3-red">
-<span onclick="this.parentElement.style.display='none'" class="w3-closebtn">&times;</span>
-  <h1>Danger!</h1>
-  <p>Car near miss.</p>
-</div>
--->
+
 <!-- UI design -->
  <div class="w3-card-4 w3-margin w3-white">
     <div class="w3-container w3-padding-8">
@@ -35,12 +27,20 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     </div>
     <div class="w3-container">
         <p> </p>
-    <div class="w3-row">
 <span style="background-color: #ffffff; font-size: 18px; font-weight: bold; color: #9900FF; padding-right:10px">
 <!-- MAP -->
-  <canvas id="myCanvas" width="700" height="500" style="border:0px solid #d3d3d3;">
+<table>
+  <td>
+    <canvas id="myCanvas" width="700" height="500" style="border:0px solid #d3d3d3;">
 Your browser does not support the HTML5 canvas tag.</canvas>
-
+  </td>
+  <td>
+    <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationA()"><b>StationA</b></button></p>
+    <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationB()"><b>StationB</b></button></p>
+    <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationC()"><b>StationC</b></button></p>
+  </td>
+</table>
+  
 <script>
 
   var c = document.getElementById("myCanvas");
@@ -89,8 +89,8 @@ Your browser does not support the HTML5 canvas tag.</canvas>
   };
 
   ws.onmessage = function (evt) {
+    console.log('hello');
     //swal(evt.data);
-    console.log(evt.data);
     if (evt.data == "e"){
       error();
     }
@@ -306,111 +306,6 @@ Your browser does not support the HTML5 canvas tag.</canvas>
     }
   };
 
-  //---To stationA
-  /*function staA(){
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
-    //---stationB
-    var ctx1 = c.getContext("2d");
-    //---stationC
-    var ctx2 = c.getContext("2d");
-    //---stationA
-    var ctx3 = c.getContext("2d");
-    //---map
-    ctx.lineWidth = 10;
-    ctx.strokeRect(50, 50, 600, 400);
-    //---stationB
-    ctx1.beginPath();
-    ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
-    ctx.font = "30px Arial";
-    ctx.fillText("B", 370,100);
-    ctx1.fillStyle = "black";
-    ctx1.fill();
-    //---stationC
-    ctx2.beginPath();
-    ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-    ctx.font = "30px Arial";
-    ctx.fillText("C", 70,310);
-    ctx2.fillStyle = "black";
-    ctx2.fill();
-    //---stationA
-    ctx3.beginPath();
-    ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
-    ctx.font = "30px Arial";
-    ctx.fillText("A", 600,310);
-    ctx3.fillStyle = "red";
-    ctx3.fill(); 
-  }
-//---To stationB
-  function staB(){
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
-    //---stationB
-    var ctx1 = c.getContext("2d");
-    //---stationC
-    var ctx2 = c.getContext("2d");
-    //---stationA
-    var ctx3 = c.getContext("2d");
-    //---map
-    ctx.lineWidth = 10;
-    ctx.strokeRect(50, 50, 600, 400);
-    //---stationB
-    ctx1.beginPath();
-    ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
-    ctx.font = "30px Arial";
-    ctx.fillText("B", 370,100);
-    ctx1.fillStyle = "red";
-    ctx1.fill();
-    //---stationC
-    ctx2.beginPath();
-    ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-    ctx.font = "30px Arial";
-    ctx.fillText("C", 70,310);
-    ctx2.fillStyle = "black";
-    ctx2.fill();
-    //---stationA
-    ctx3.beginPath();
-    ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
-    ctx.font = "30px Arial";
-    ctx.fillText("A", 600,310);
-    ctx3.fillStyle = "black";
-    ctx3.fill();
-  }
-  //---To stationC
-  function staC(){
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
-    //---stationB
-    var ctx1 = c.getContext("2d");
-    //---stationC
-    var ctx2 = c.getContext("2d");
-    //---stationA
-    var ctx3 = c.getContext("2d");
-    //---map
-    ctx.lineWidth = 10;
-    ctx.strokeRect(50, 50, 600, 400);
-    //---stationB
-    ctx1.beginPath();
-    ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
-    ctx.font = "30px Arial";
-    ctx.fillText("B", 370,100);
-    ctx1.fillStyle = "black";
-    ctx1.fill();
-    //---stationC
-    ctx2.beginPath();
-    ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-    ctx.font = "30px Arial";
-    ctx.fillText("C", 70,310);
-    ctx2.fillStyle = "red";
-    ctx2.fill();
-    //---stationA
-    ctx3.beginPath();
-    ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
-    ctx.font = "30px Arial";
-    ctx.fillText("A", 600,310);
-    ctx3.fillStyle = "black";
-    ctx3.fill();
-  }*/
   //---If car stop
   function error(){
     swal("Danger!", "Car near miss");
@@ -437,36 +332,10 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 
 </script>
 
-  <b>
-    <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationA()"><b>StationA</b></button></p>
-    <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationB()"><b>StationB</b></button></p>
-    <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationC()"><b>StationC</b></button></p>
-  </b>
          </div>
       </div>
  </div>
-  <hr>
-<!-- Car1 to any station -->
-<!--
-<div class="w3-card-4 w3-margin w3-white">
-    <div class="w3-container w3-padding-8">
-      <h3><b>Car1</b></h3>
-    </div>
-    <div class="w3-container">
-      
-      
-        <div class="w3-row">
-        <div class="w3-col m8 s12">
 
-          <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationA()"><b>StationA</b></button></p>
-          <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationB()"><b>StationB</b></button></p>
-          <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationC()"><b>StationC</b></button></p>
-        </div>
-        </div>
-      </div>
-    </div>
-</div>
--->
 <!-- Footer -->
 <footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
   <p>Powered by Kevin</p>
