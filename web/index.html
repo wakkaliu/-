@@ -57,22 +57,22 @@ Your browser does not support the HTML5 canvas tag.</canvas>
   //---stationB
   ctx1.beginPath();
   ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
-  ctx.font = "30px Arial";
-  ctx.fillText("B", 370,100);
+  ctx1.font = "30px Arial";
+  ctx1.fillText("B", 370,100);
   ctx1.fillStyle = "black";
   ctx1.fill();
   //---stationC
   ctx2.beginPath();
   ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-  ctx.font = "30px Arial";
-  ctx.fillText("C", 70,310);
+  ctx2.font = "30px Arial";
+  ctx2.fillText("C", 70,310);
   ctx2.fillStyle = "black";
   ctx2.fill();
   //---stationA
   ctx3.beginPath();
   ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
-  ctx.font = "30px Arial";
-  ctx.fillText("A", 600,310);
+  ctx3.font = "30px Arial";
+  ctx3.fillText("A", 600,310);
   ctx3.fillStyle = "black";
   ctx3.fill();
   
@@ -80,6 +80,7 @@ Your browser does not support the HTML5 canvas tag.</canvas>
   //var ws = new WebSocket("ws://127.0.0.1:8888/");
   ws.onopen = function() {
    ws.send("Connect Sucess");
+   swal("Connect Sucess");
   };
 
   ws.onerror = function (error) {
@@ -97,213 +98,87 @@ Your browser does not support the HTML5 canvas tag.</canvas>
     else if (evt.data == "A"){
       var c = document.getElementById("myCanvas");
       var ctx = c.getContext("2d");
-      //---stationB
-      var ctx1 = c.getContext("2d");
-      //---stationC
-      var ctx2 = c.getContext("2d");
       //---stationA
       var ctx3 = c.getContext("2d");
-      //---map
-      ctx.lineWidth = 10;
-      ctx.strokeRect(50, 50, 600, 400);
-      //---stationB
-      ctx1.beginPath();
-      ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("B", 370,100);
-      ctx1.fillStyle = "black";
-      ctx1.fill();
-      //---stationC
-      ctx2.beginPath();
-      ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("C", 70,310);
-      ctx2.fillStyle = "black";
-      ctx2.fill();
       //---stationA
       ctx3.beginPath();
       ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("A", 600,310);
-      ctx.font = "10px Arial";
-      ctx.fillText("CAR", 670,310);
+      ctx3.font = "10px Arial";
+      ctx3.fillText("CAR", 670,310);
       ctx3.fillStyle = "red";
-      ctx3.fill(); 
+      ctx3.fill();
+      return 0; 
     }
     else if (evt.data == "B"){
       var c = document.getElementById("myCanvas");
       var ctx = c.getContext("2d");
       //---stationB
-      var ctx1 = c.getContext("2d");
-      //---stationC
-      var ctx2 = c.getContext("2d");
-      //---stationA
-      var ctx3 = c.getContext("2d");
-      //---map
-      ctx.lineWidth = 10;
-      ctx.strokeRect(50, 50, 600, 400);
+      var ctx1 = c.getContext("2d"); 
       //---stationB
       ctx1.beginPath();
       ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("B", 370,100);
-      ctx.font = "10px Arial";
+      ctx1.font = "10px Arial";
       ctx.fillText("CAR", 370,30);
       ctx1.fillStyle = "red";
       ctx1.fill();
-      //---stationC
-      ctx2.beginPath();
-      ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("C", 70,310);
-      ctx2.fillStyle = "black";
-      ctx2.fill();
-      //---stationA
-      ctx3.beginPath();
-      ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("A", 600,310);
-      ctx3.fillStyle = "black";
-      ctx3.fill(); 
+      return 0;       
     }
     else if (evt.data == "C"){
       var c = document.getElementById("myCanvas");
       var ctx = c.getContext("2d");
-      //---stationB
-      var ctx1 = c.getContext("2d");
       //---stationC
       var ctx2 = c.getContext("2d");
-      //---stationA
-      var ctx3 = c.getContext("2d");
-      //---map
-      ctx.lineWidth = 10;
-      ctx.strokeRect(50, 50, 600, 400);
-      //---stationB
-      ctx1.beginPath();
-      ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("B", 370,100);
-      ctx1.fillStyle = "black";
-      ctx1.fill();
       //---stationC
       ctx2.beginPath();
       ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("C", 70,310);
-      ctx.font = "10px Arial";
-      ctx.fillText("CAR", 5,305);
+      ctx2.font = "10px Arial";
+      ctx2.fillText("CAR", 5,305);
       ctx2.fillStyle = "red";
       ctx2.fill();
-      //---stationA
-      ctx3.beginPath();
-      ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("A", 600,310);
-      ctx3.fillStyle = "black";
-      ctx3.fill(); 
+      return 0; 
     }
     else if (evt.data == "a"){
       var c = document.getElementById("myCanvas");
-      var ctx = c.getContext("2d");
-      //---stationB
-      var ctx1 = c.getContext("2d");
-      //---stationC
-      var ctx2 = c.getContext("2d");
       //---stationA
       var ctx3 = c.getContext("2d");
-      //---map
-      ctx.lineWidth = 10;
-      ctx.strokeRect(50, 50, 600, 400);
-      //---stationB
-      ctx1.beginPath();
-      ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("B", 370,100);
-      ctx1.fillStyle = "black";
-      ctx1.fill();
-      //---stationC
-      ctx2.beginPath();
-      ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("C", 70,310);
-      ctx2.fillStyle = "black";
-      ctx2.fill();
       //---stationA
       ctx3.beginPath();
       ctx3.arc(650, 150, 15, 0, 2 * Math.PI);
-      ctx.font = "px Arial";
-      ctx.fillText("CAR", 670,155);
+      ctx3.font = "10px Arial";
+      ctx3.fillText("CAR", 670,155);
       ctx3.fillStyle = "red";
       ctx3.fill(); 
+      return 0; 
     }
     else if (evt.data == "b"){
       var c = document.getElementById("myCanvas");
       var ctx = c.getContext("2d");
       //---stationB
       var ctx1 = c.getContext("2d");
-      //---stationC
-      var ctx2 = c.getContext("2d");
-      //---stationA
-      var ctx3 = c.getContext("2d");
-      //---map
-      ctx.lineWidth = 10;
-      ctx.strokeRect(50, 50, 600, 400);
       //---stationB
       ctx1.beginPath();
       ctx1.arc(100, 50, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("CAR", 95,20);
+      ctx1.font = "10px Arial";
+      ctx1.fillText("CAR", 95,20);
       ctx1.fillStyle = "red";
       ctx1.fill();
-      //---stationC
-      ctx2.beginPath();
-      ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("C", 70,310);
-      ctx2.fillStyle = "black";
-      ctx2.fill();
-      //---stationA
-      ctx3.beginPath();
-      ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("A", 600,310);
-      ctx3.fillStyle = "black";
-      ctx3.fill(); 
+      return 0;  
     }
     else if (evt.data == "c"){
       var c = document.getElementById("myCanvas");
       var ctx = c.getContext("2d");
-      //---stationB
-      var ctx1 = c.getContext("2d");
       //---stationC
       var ctx2 = c.getContext("2d");
-      //---stationA
-      var ctx3 = c.getContext("2d");
-      //---map
-      ctx.lineWidth = 10;
-      ctx.strokeRect(50, 50, 600, 400);
-      //---stationB
-      ctx1.beginPath();
-      ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("B", 370,100);
-      ctx1.fillStyle = "black";
-      ctx1.fill();
       //---stationC
       ctx2.beginPath();
-      ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-      ctx.font = "30px Arial";
-      ctx.fillText("C", 70,310);
+      ctx2.arc(400, 450, 15, 0, 2 * Math.PI);
+      ctx2.font = "10px Arial";
+      ctx2.fillText("CAR", 388,430);
       ctx2.fillStyle = "red";
       ctx2.fill();
-      //---stationA
-      ctx3.beginPath();
-      ctx3.arc(400, 450, 15, 0, 2 * Math.PI);
-      ctx.font = "10px Arial";
-      ctx.fillText("CAR", 390,425);
-      ctx3.fillStyle = "black";
-      ctx3.fill(); 
+      return 0; 
     }
+
   };
 
   //---If car stop
