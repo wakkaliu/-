@@ -28,8 +28,9 @@ char detect_fun(GPIO *A, GPIO *B){
         }
 
         for(i = 0; i<3; i++){
-            printf("enter black!");
+            //printf("enter black!");
                 // check line is 1 or 0
+            printf("in black= %d, %d\n",A->data, B->data);
             if(gpio_state(B) == DETECT_SIGNAL){
                 if(gpio_state(A) == DETECT_SIGNAL)
                     r[i] = 1;
@@ -39,38 +40,40 @@ char detect_fun(GPIO *A, GPIO *B){
                     printf("detect error!!!!!!!!!!!!!!!!!");
 
             }
-            printf("in black!");
+            //printf("in black!");
 
             while(1){
-                usleep(100000);
+                usleep(1000);
                 if(gpio_state(B) == DETECT_SIGNAL){
-                    printf("in black= %d, %d\n",A->data, B->data);
+                    //printf("in black= %d, %d\n",A->data, B->data);
                 }
                 else
                     break;
             }
-            printf("enter white!");
+            //printf("enter white!");
 
-            //開始計算如果沒有偵測到信號的時間過久(5秒)，重新開始迴圈
             clock_t begin = clock();
             while(1){
                 if(i == 2)
                     break;
-                usleep(100000);
+                usleep(1000);
                 if(gpio_state(B) == OFF_SIGNAL){
-                    printf("in white= %d, %d\n",A->data, B->data);
+                    //printf("in white= %d, %d\n",A->data, B->data);
                     clock_t end = clock();
-                    t_check = begin -+ end;
+                    t_check = end - begin;
+                    //printf("t_check_time = %.2f\n", t_check);
                     if( t_check > fiveseconds)
                         break;
                 }
                 else
                     break;
             }
+            if( t_check > fiveseconds)
+                break;
             printf("\n %d time result is %d\n", i, r[i]);
         }
         if( t_check > fiveseconds)
-            ;
+            printf("I have arrive 5 secs");
         else{
             result = check_position(r);
             break;
