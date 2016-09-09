@@ -5,6 +5,8 @@ char detect_fun(GPIO *A, GPIO *B){
     int i = 0, count = 0, j=0; 
     int r[3];
     char result = NULL;
+    float t_check = 0.0;
+    long fiveseconds = CLOCKS_PER_SEC * 5;
 
     signal_A = gpio_state(A);
     signal_B = gpio_state(B);
@@ -48,21 +50,32 @@ char detect_fun(GPIO *A, GPIO *B){
                     break;
             }
             printf("enter white!");
-            
+
+            //開始計算如果沒有偵測到信號的時間過久(5秒)，重新開始迴圈
+            clock_t begin = clock();
             while(1){
                 if(i == 2)
                     break;
                 usleep(100000);
-                if(gpio_state(B) == OFF_SIGNAL)
+                if(gpio_state(B) == OFF_SIGNAL){
                     printf("in white= %d, %d\n",A->data, B->data);
+                    clock_t end = clock();
+                    t_check = begin -+ end;
+                    if( t_check > fiveseconds)
+                        break;
+                }
                 else
                     break;
             }
             printf("\n %d time result is %d\n", i, r[i]);
         }
-
-        result = check_position(r);
-        break;
+        if( t_check > fiveseconds)
+            ;
+        else{
+            result = check_position(r);
+            break;
+        }
+        
     }
 }
 
