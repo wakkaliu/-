@@ -31,8 +31,7 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <!-- MAP -->
 <table>
   <td>
-    <canvas id="myCanvas" width="700" height="500" style="border:0px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.</canvas>
+    <img id="mypic" src="map.png" alt="Map">
   </td>
   <td>
     <p><button class="w3-btn-block w3-padding-large w3-white w3-border w3-hover-border-black" onclick="btn_getstationA()"><b>StationA</b></button></p>
@@ -43,38 +42,7 @@ Your browser does not support the HTML5 canvas tag.</canvas>
   
 <script>
 
-  var c = document.getElementById("myCanvas");
-  var ctx = c.getContext("2d");
-  //---stationB
-  var ctx1 = c.getContext("2d");
-  //---stationC
-  var ctx2 = c.getContext("2d");
-  //---stationA
-  var ctx3 = c.getContext("2d");
-  //---map
-  ctx.lineWidth = 10;
-  ctx.strokeRect(50, 50, 600, 400);
-  //---stationB
-  ctx1.beginPath();
-  ctx1.arc(380, 50, 15, 0, 2 * Math.PI);
-  ctx1.font = "30px Arial";
-  ctx1.fillText("B", 370,100);
-  ctx1.fillStyle = "black";
-  ctx1.fill();
-  //---stationC
-  ctx2.beginPath();
-  ctx2.arc(50, 300, 15, 0, 2 * Math.PI);
-  ctx2.font = "30px Arial";
-  ctx2.fillText("C", 70,310);
-  ctx2.fillStyle = "black";
-  ctx2.fill();
-  //---stationA
-  ctx3.beginPath();
-  ctx3.arc(650, 300, 15, 0, 2 * Math.PI);
-  ctx3.font = "30px Arial";
-  ctx3.fillText("A", 600,310);
-  ctx3.fillStyle = "black";
-  ctx3.fill();
+  
   
   ws = new WebSocket("ws://127.0.0.1:8888/echo");
   //var ws = new WebSocket("ws://127.0.0.1:8888/");
@@ -97,87 +65,22 @@ Your browser does not support the HTML5 canvas tag.</canvas>
       error();
     }
     else if (evt.data == "A"){
-      var c = document.getElementById("myCanvas");
-      var ctx = c.getContext("2d");
-      //---stationA
-      var ctx4 = c.getContext("2d");
-      //---stationA
-      ctx4.beginPath();
-      ctx4.arc(650, 300, 15, 0, 2 * Math.PI);
-      ctx4.font = "10px Arial";
-      ctx4.fillText("CAR", 670,310);
-      ctx4.fillStyle = "red";
-      ctx4.fill();
-      return 0; 
+       document.getElementById("mypic").src = "A.png";
     }
     else if (evt.data == "B"){
-      var c = document.getElementById("myCanvas");
-      var ctx = c.getContext("2d");
-      //---stationB
-      var ctx5 = c.getContext("2d"); 
-      //---stationB
-      ctx5.beginPath();
-      ctx5.arc(380, 50, 15, 0, 2 * Math.PI);
-      ctx5.font = "10px Arial";
-      ctx5.fillText("CAR", 370,30);
-      ctx5.fillStyle = "red";
-      ctx5.fill();
-      return 0;       
+      document.getElementById("mypic").src = "B.png";
     }
     else if (evt.data == "C"){
-      var c = document.getElementById("myCanvas");
-      var ctx = c.getContext("2d");
-      //---stationC
-      var ctx6 = c.getContext("2d");
-      //---stationC
-      ctx6.beginPath();
-      ctx6.arc(50, 300, 15, 0, 2 * Math.PI);
-      ctx6.font = "10px Arial";
-      ctx6.fillText("CAR", 5,305);
-      ctx6.fillStyle = "red";
-      ctx6.fill();
-      return 0; 
+      document.getElementById("mypic").src = "C.png";
     }
     else if (evt.data == "a"){
-      var c = document.getElementById("myCanvas");
-      //---stationA
-      var ctx7 = c.getContext("2d");
-      //---stationA
-      ctx7.beginPath();
-      ctx7.arc(650, 150, 15, 0, 2 * Math.PI);
-      ctx7.font = "10px Arial";
-      ctx7.fillText("CAR", 670,155);
-      ctx7.fillStyle = "red";
-      ctx7.fill(); 
-      return 0; 
+      document.getElementById("mypic").src = "a1.png";
     }
     else if (evt.data == "b"){
-      var c = document.getElementById("myCanvas");
-      var ctx = c.getContext("2d");
-      //---stationB
-      var ctx8 = c.getContext("2d");
-      //---stationB
-      ctx8.beginPath();
-      ctx8.arc(100, 50, 15, 0, 2 * Math.PI);
-      ctx8.font = "10px Arial";
-      ctx8.fillText("CAR", 95,20);
-      ctx8.fillStyle = "red";
-      ctx8.fill();
-      return 0;  
+     document.getElementById("mypic").src = "b1.png";
     }
     else if (evt.data == "c"){
-      var c = document.getElementById("myCanvas");
-      var ctx = c.getContext("2d");
-      //---stationC
-      var ctx9 = c.getContext("2d");
-      //---stationC
-      ctx9.beginPath();
-      ctx9.arc(400, 450, 15, 0, 2 * Math.PI);
-      ctx9.font = "10px Arial";
-      ctx9.fillText("CAR", 388,430);
-      ctx9.fillStyle = "red";
-      ctx9.fill();
-      return 0; 
+      document.getElementById("mypic").src = "c1.png";
     }
 
   };
