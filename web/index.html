@@ -45,7 +45,7 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   
   
   ws = new WebSocket("ws://192.168.0.105:8888/echo");
-  //var ws = new WebSocket("ws://127.0.0.1:8888/");
+  //ws = new WebSocket("ws://192.168.5.17:8888/echo");
   ws.onopen = function() {
    ws.send("Connect Sucess");
    //alert("Connect Sucess");
@@ -91,20 +91,21 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   }
 
   function btn_getstationA(){
-        //var str = 'http://192.168.5.132:8888?callback=?&data=A';
+        //var str = 'http://192.168.5.17:8888?callback=?&data=A';
         var str = 'http://192.168.0.105:8888?callback=?&data=A';
         $.getJSON(str);
         swal("Connect Sucess");
         
     }
   function btn_getstationB(){
-        //var str = 'http://192.168.5.132:8888?callback=?&data=B';
+        //var str = 'http://192.168.5.17:8888?callback=?&data=B';
         var str = 'http://192.168.0.105:8888?callback=?&data=B';
         $.getJSON(str);
         swal("Connect Sucess");
     }
   function btn_getstationC(){
-      var str = 'http://192.168.0.105:8888?callback=?&data=C';
+	      //var str = 'http://127.0.0.1:8888?callback=?&data=C';
+        var str = 'http://192.168.0.105:8888?callback=?&data=C';
         $.getJSON(str);
         swal("Connect Sucess");
     }
