@@ -124,7 +124,7 @@ def judge(rec):
     x = ps.dest-ps.recent
     print('x='+str(x))
 
-    if (x is 1) or (x is-5):
+    if x is -1:
         return 1
     elif x is 0:
         ps.initial = ps.recent
