@@ -212,7 +212,7 @@ def checkQueue():
         global i
         i = i+1
         print('i'+str(i))
-        if i is 5:
+        if i is 2:
             i = 0
             print('re_ps='+num_map_position(ps.recent))
             c.write_message(num_map_position(ps.recent))
@@ -229,7 +229,7 @@ if __name__ == "__main__":
 
 # ---- websocket------------
     mainLoop = IOLoop.instance()
-    scheduler_interval = 1000
+    scheduler_interval = 500
     scheduler = tornado.ioloop.PeriodicCallback(checkQueue, scheduler_interval, io_loop = mainLoop)
     scheduler.start()
     mainLoop.start()
